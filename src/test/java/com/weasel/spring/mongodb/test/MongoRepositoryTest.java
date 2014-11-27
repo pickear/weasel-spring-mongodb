@@ -6,7 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.google.common.collect.Lists;
-import com.weasel.lang.helper.DemonPredict;
+import com.weasel.core.helper.DemonPredict;
 import com.weasel.mongodb.Page;
 
 public class MongoRepositoryTest {

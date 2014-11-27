@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -19,7 +18,8 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.weasel.lang.helper.GodHands;
+import com.weasel.core.helper.DemonPredict;
+import com.weasel.core.helper.GodHands;
 
 /**
  * 
@@ -34,7 +34,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 
 	@SuppressWarnings("unchecked")
 	protected MongoRepositorySupport(MongoOperations _operations) {
-		Validate.notNull(_operations, "MongoOperations must not be null,you can config MongoTemplate in spring xml ");
+		DemonPredict.notNull(_operations, "MongoOperations must not be null,you can config MongoTemplate in spring xml ");
 		entityClass = (Class<T>) GodHands.genericsTypes(getClass())[1];
 		this.operations = _operations;
 		Field[] fields = entityClass.getDeclaredFields();
@@ -64,7 +64,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 	 */
 	public <S extends T> S save(S entity) {
 
-		Validate.notNull(entity, "entity must not be null...");
+		DemonPredict.notNull(entity, "entity must not be null...");
 
 		getOperations().save(entity, getCollectionName());
 		return entity;
@@ -77,7 +77,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 	 */
 	public T findOne(ID id) {
 
-		Validate.notNull(id, "id must not be null...");
+		DemonPredict.notNull(id, "id must not be null...");
 		return getOperations().findById(id, entityClass, getCollectionName());
 	}
 
@@ -88,7 +88,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 	 */
 	public boolean exists(ID id) {
 
-		Validate.notNull(id, "id must not be null...");
+		DemonPredict.notNull(id, "id must not be null...");
 		final Query query = idQuery(id);
 		query.fields();
 
@@ -102,7 +102,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 	 */
 	public List<T> findAll(Iterable<ID> ids) {
 
-		Validate.notNull(ids, "ids must not be null...");
+		DemonPredict.notNull(ids, "ids must not be null...");
 		Set<ID> parameters = Sets.newHashSet();
 		for (ID id : ids) {
 			parameters.add(id);
@@ -124,7 +124,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 	 */
 	public void delete(ID id) {
 
-		Validate.notNull(id, "id must not be null...");
+		DemonPredict.notNull(id, "id must not be null...");
 		getOperations().remove(idQuery(id), entityClass);
 	}
 	
@@ -134,7 +134,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 	 */
 	public void delete(T entity) {
 
-		Validate.notNull(entity, "entity must not be null...");
+		DemonPredict.notNull(entity, "entity must not be null...");
 		getOperations().remove(entity, getCollectionName());
 	}
 
@@ -144,7 +144,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 	 */
 	public void delete(Iterable<? extends T> entities) {
 
-		Validate.notNull(entities, "entities must not be null...");
+		DemonPredict.notNull(entities, "entities must not be null...");
 
 		for (T entity : entities) {
 			delete(entity);
@@ -166,7 +166,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 	 */
 	public <S extends T> List<S> save(Iterable<S> entities) {
 
-		Validate.notNull(entities, "entities must not be null...");
+		DemonPredict.notNull(entities, "entities must not be null...");
 
 		List<S> result = Lists.newArrayList();
 		for (S entity : entities) {
@@ -191,7 +191,7 @@ public abstract class MongoRepositorySupport<ID extends Serializable,T> {
 	 */
 	public List<T> findAll(Sort sort) {
 
-		Validate.notNull(sort, "sort must not be null...");
+		DemonPredict.notNull(sort, "sort must not be null...");
 		return findAll(new Query().with(sort));
 	}
 

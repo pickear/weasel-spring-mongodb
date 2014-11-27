@@ -3,12 +3,12 @@ package com.weasel.mongodb;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
 import com.google.common.collect.Lists;
+import com.weasel.core.helper.DemonPredict;
 
 /**
  * @author Dylan
@@ -143,7 +143,7 @@ public class Page<T> implements Pageable {
 	 * @param result
 	 */
 	public Page<T> setResult(List<T> _result) {
-		Validate.notNull(result, "result must not be null");
+		DemonPredict.notNull(result, "result must not be null");
 		result = _result;
 		return this;
 	}
